@@ -44,6 +44,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${siteName}${tagline ? ` · ${tagline}` : ""}`;
 
   return {
+    verification: {
+      google: "zZDATTtbn6EjENBkEFree78RDYrkY21Tac9jxNX3RZM",
+    },
     title: { default: title, template: `%s · ${siteName}` },
     description,
     openGraph: {

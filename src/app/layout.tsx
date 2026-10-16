@@ -22,9 +22,6 @@ const mukta = FontMukta({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  verification: {
-    google: "zZDATTtbn6EjENBkEFree78RDYrkY21Tac9jxNX3RZM",
-  },
   title: {
     default: `${siteConfig.name} · ${siteConfig.tagline.en}`,
     template: `%s · ${siteConfig.name}`,
