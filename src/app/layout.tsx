@@ -3,6 +3,7 @@ import { Inter as FontInter } from "next/font/google";
 import { Mukta as FontMukta } from "next/font/google";
 import { headers } from "next/headers";
 import { siteConfig } from "@/data/site";
+import { serializeJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -56,9 +57,35 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const headerList = headers();
   const locale = (headerList.get("x-locale") === "mr" ? "mr" : "en") as "en" | "mr";
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${siteConfig.url}/#organization`,
+        name: siteConfig.name,
+        url: siteConfig.url,
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteConfig.url}/#website`,
+        name: locale === "mr" ? siteConfig.nameMarathi : siteConfig.name,
+        url: siteConfig.url,
+        inLanguage: locale === "mr" ? "mr-IN" : "en-IN",
+        publisher: { "@id": `${siteConfig.url}/#organization` },
+      },
+    ],
+  };
+
   return (
     <html lang={locale} className={cn(inter.variable, mukta.variable)}>
-      <body className="min-h-screen bg-white font-sans">{children}</body>
+      <body className="min-h-screen bg-white font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

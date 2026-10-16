@@ -92,6 +92,7 @@ export function Hero({ locale, settings }: { locale: Locale; settings?: SiteSett
               fit="cover"
               fallback={L === "mr" ? "[अधिकृत छायाचित्र]" : "[Official Photo]"}
               alt={baseTitle}
+              priority
               className="bg-green-50"
             />
             {/* Bottom green accent strip */}
