@@ -12,12 +12,16 @@ import type {
 // Replace values below as the party supplies official details.
 // =============================================================
 
+const productionSiteUrl = "https://www.janhitlokshahiparty.in";
+
 function getSiteUrl(): string {
+  if (process.env.NODE_ENV === "production") {
+    return productionSiteUrl;
+  }
+
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (!configuredUrl) {
-    return process.env.NODE_ENV === "production"
-      ? "https://www.janhitlokshahiparty.in"
-      : "http://localhost:3000";
+    return "http://localhost:3000";
   }
 
   const parsedUrl = new URL(configuredUrl);
@@ -30,9 +34,6 @@ function getSiteUrl(): string {
     parsedUrl.hash
   ) {
     throw new Error("NEXT_PUBLIC_SITE_URL must be an absolute HTTP(S) origin without a path.");
-  }
-  if (process.env.NODE_ENV === "production" && parsedUrl.protocol !== "https:") {
-    throw new Error("NEXT_PUBLIC_SITE_URL must use HTTPS in production.");
   }
 
   return parsedUrl.origin;
