@@ -15,10 +15,9 @@ import type {
 function getSiteUrl(): string {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (!configuredUrl) {
-    if (process.env.NODE_ENV === "production") {
-      throw new Error("NEXT_PUBLIC_SITE_URL must be set to the production site origin.");
-    }
-    return "http://localhost:3000";
+    return process.env.NODE_ENV === "production"
+      ? "https://www.janhitlokshahiparty.in"
+      : "http://localhost:3000";
   }
 
   const parsedUrl = new URL(configuredUrl);
