@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { notFound } from "next/navigation";
 import { siteConfig } from "@/data/site";
 import { LocaleProvider } from "@/components/providers/locale-provider";
 import { Header } from "@/components/layout/header";
@@ -30,6 +31,7 @@ async function loadSettings(): Promise<SiteSettings | null> {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  if (!siteConfig.locales.includes(params.lang as Locale)) notFound();
   const lang = params.lang as "en" | "mr";
   const isMr = lang === "mr";
   const settings = await loadSettings();
@@ -61,7 +63,8 @@ export const viewport: Viewport = {
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const lang = (params.lang === "mr" ? "mr" : "en") as Locale;
+  if (!siteConfig.locales.includes(params.lang as Locale)) notFound();
+  const lang = params.lang as Locale;
 
   // Content comes from the backend. If the API is briefly unavailable we fall
   // back to the static config so the site still renders.

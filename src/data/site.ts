@@ -12,12 +12,37 @@ import type {
 // Replace values below as the party supplies official details.
 // =============================================================
 
+function getSiteUrl(): string {
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (!configuredUrl) {
+    return process.env.NODE_ENV === "production"
+      ? "https://www.janhitlokshahiparty.in"
+      : "http://localhost:3000";
+  }
+
+  const parsedUrl = new URL(configuredUrl);
+  if (
+    !["http:", "https:"].includes(parsedUrl.protocol) ||
+    parsedUrl.username ||
+    parsedUrl.password ||
+    parsedUrl.pathname !== "/" ||
+    parsedUrl.search ||
+    parsedUrl.hash
+  ) {
+    throw new Error("NEXT_PUBLIC_SITE_URL must be an absolute HTTP(S) origin without a path.");
+  }
+  if (process.env.NODE_ENV === "production" && parsedUrl.protocol !== "https:") {
+    throw new Error("NEXT_PUBLIC_SITE_URL must use HTTPS in production.");
+  }
+
+  return parsedUrl.origin;
+}
+
 export const siteConfig = {
   name: "Janhit Lokshahi Party",
   nameMarathi: "जनहित लोकशाही पक्ष",
   shortName: "JLP",
-  // Official domain — replace when confirmed.
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://janhit-lokshahi.in",
+  url: getSiteUrl(),
   tagline: {
     en: "For the Public Interest (Janhit)",
     mr: "जनहितासाठी",
