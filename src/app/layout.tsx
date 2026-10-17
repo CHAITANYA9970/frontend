@@ -22,11 +22,18 @@ const mukta = FontMukta({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+
+  verification: {
+    google: "zZDATTtbn6EjENBkEFree78RDYrkY21Tac9jxNX3RZM",
+  },
+
   title: {
     default: `${siteConfig.name} · ${siteConfig.tagline.en}`,
     template: `%s · ${siteConfig.name}`,
   },
+
   description: siteConfig.description.en,
+
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
@@ -35,11 +42,13 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     locale: "en_IN",
   },
+
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.name} · ${siteConfig.tagline.en}`,
     description: siteConfig.description.en,
   },
+
   robots: {
     index: true,
     follow: true,
