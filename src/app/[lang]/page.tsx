@@ -23,11 +23,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const locale = params.lang === "mr" ? "mr" : "en";
   return buildMetadata({
-    title: locale === "mr" ? "अधिकृत संकेतस्थळ" : "Official Website",
+    title:
+      locale === "mr"
+        ? "महाराष्ट्रातील जनहिताचे राजकारण"
+        : "People-First Politics in Maharashtra",
     description:
       locale === "mr"
-        ? "जनहित लोकशाही पक्ष, महाराष्ट्र यांचे अधिकृत संकेतस्थळ. पक्षाची दृष्टी, नेतृत्व, जनहिताचे उपक्रम, बातम्या आणि कार्यक्रम जाणून घ्या."
-        : "Explore the official website of Janhit Lokshahi Party, Maharashtra. Learn about the party's vision, leadership, public initiatives, news, and events.",
+        ? "जनहित लोकशाही पक्षाचे अधिकृत संकेतस्थळ. महाराष्ट्रातील पक्षाची दृष्टी, नेतृत्व, जनहिताचे उपक्रम, बातम्या, मोहिमा आणि कार्यक्रम जाणून घ्या."
+        : "Official website of Janhit Lokshahi Party in Maharashtra. Read the party's vision, meet its leadership, and find updates on public initiatives, campaigns, and events.",
     path: "/",
     locale,
   });
